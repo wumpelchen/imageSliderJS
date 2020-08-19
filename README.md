@@ -27,7 +27,7 @@ const slider = new ImageSlider({
 ## options for configurations and default settings
 
 property | value | description | defalut
- ----- | :-----: | :-----: | :-----: | -----:
+---|---|---|---|---
 selector | string | Selector for the div container |
 imageList | array | List of the links to the images |
 slideWidth | number | pixel width of the slider | 600
