@@ -9,25 +9,29 @@ class ImageSlider {
         interval        = 3000,
         withCursors     = true,
         withIndicators  = true,
-        moveDirection   = 'forward'
+        moveDirection   = 'forward',
+        fullWidth       = false,
+        fullHeight      = false
     } = {}){
         this.slider = document.querySelector(selector);
 
-        this.slider.style.width = `${slideWidth}px`;
+        this.slider.style.width = `${fullWidth ? this.slider.parentElement.offsetWidth : slideWidth}px`;
+        this.slider.style.height = `${fullHeight ? this.slider.parentElement.offsetHeight : slideHeight}px`;
 
         let div = document.createElement('div');
         div.classList.add('slider__container');
-        div.style.height = `${slideHeight}px`;
+        div.style.height = `${this.slider.height}px`;
 
         for(let i in imageList){
             let img = document.createElement('div');
             img.style.background = `url(${imageList[i]})`;
-            img.style.minWidth = `${slideWidth}px`;
-            img.style.height = `${slideHeight}px`;
+            img.style.minWidth =`${this.slider.offsetWidth}px`;
+            img.style.minHeight = `${this.slider.offsetHeight}px`;
             img.style.backgroundRepeat = 'no-repeat';
             img.style.backgroundSize = 'cover';
             img.style.display = 'block';
             img.style.backgroundPosition = 'center';
+            img.style.objectFit = 'cover';
             
             div.appendChild(img);
         }
@@ -84,7 +88,6 @@ class ImageSlider {
         }
 
         this.currentSlide   = 0;
-        this.slideSize      = slideWidth;
         this.slideLength    = imageList.length -1;
         this.slideBox       = div;
         this.interval       = interval;
@@ -93,6 +96,24 @@ class ImageSlider {
         if(autoPlay){
             setInterval(()=>this.moveSlides(), this.interval);
         }
+
+        window.addEventListener('resize', ()=>{
+
+            if(fullWidth || fullHeight) {
+
+                let slides = this.slideBox.querySelectorAll('div');
+    
+                if(fullWidth){
+                    this.slider.style.width = this.slider.parentNode.offsetWidth+'px';
+                    slides.forEach(slide =>slide.style.minWidth = this.slider.offsetWidth + 'px');
+                }
+    
+                if(fullHeight){
+                    this.slider.style.height = this.slider.parentNode.offsetHeight+'px';
+                    slides.forEach(slide =>slide.style.minHeight = this.slider.offsetHeight + 'px');
+                }
+            }
+        })
 
     }
 
@@ -130,7 +151,7 @@ class ImageSlider {
 
         this.currentSlide = id;
         this.slider__indicators_dot[id].classList.add('slider__indicators-dot-selected');
-        this.slideBox.style.transform = `translateX(-${this.slideSize*this.currentSlide}px)`;
+        this.slideBox.style.transform = `translateX(-${this.slider.offsetWidth*this.currentSlide}px)`;
     }
 
 }

@@ -26,7 +26,7 @@ const slider = new ImageSlider({
 
 options for configurations and default settings
 
-property | value | description | defalut 
+property | value | description | defalut
 |---|---|---|---|
 selector | string | Selector for the div container |
 imageList | array | List of the links to the images |
@@ -37,5 +37,7 @@ interval | number | invervall for the autoPlay in milliseconds | 3000
 withCursors | boolean | switch for the navigation for netxt and preview | true
 withIndicators | boolean | switch for the indicators in the bottom of the slider | true
 moveDirection | string | the direction in which the slider moves (forward, backward) | forward
+fullWidth | boolean | ignors the setting for slideWidth and takes the width of the parent element and resized flexible with it | false
+fullHeight | boolean | ignors the setting for slideHeight and takes the heigth of the parent element and resized flexible with it | false
 
 have fun with it!
